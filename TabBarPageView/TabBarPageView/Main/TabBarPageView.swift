@@ -14,9 +14,12 @@ public class TabBarPageView:UIView,UIScrollViewDelegate,TabBarViewDelegate {
     private var tabBarView:TabBarView!
     public weak var delegate:TabBarPageViewDelegate?
 
-    public convenience init(frame:CGRect, subViews:[UIView], buttons:[UIButton], tabBarHeight:CGFloat = 50){
-        if ContainsEqual(subViews,buttons) == false {
-            print("[Warming] ScrollPageView init: count of parameter_array are unequal")
+    public convenience init(frame:CGRect, contents:[(UIView,UIButton)], tabBarHeight:CGFloat = 50){
+        var subViews:[UIView] = []
+        var buttons:[UIButton] = []
+        for (subView,button) in contents {
+            subViews.append(subView)
+            buttons.append(button)
         }
         self.init(frame:frame, subViews:subViews)
         setupTabBarView(buttons, height:tabBarHeight)

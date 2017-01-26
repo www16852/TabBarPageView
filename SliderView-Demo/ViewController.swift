@@ -19,19 +19,21 @@ class ViewController: UIViewController,TabBarPageViewDelegate {
             view.backgroundColor = ColorRandom()
             views.append(view)
         }
+        
+        var pageViewContents:[(UIView,UIButton)] = []
 
-        let titleArray = ["首頁","朋友","我的","消息","消息"]
-        let imageArray = ["home_tabbar","msg_tabbar","friend_tabbar","me_tabbar","me_tabbar"]
-        let selImageArray = ["home_tabbar_sel","msg_tabbar_sel","friend_tabbar_sel","me_tabbar_sel","me_tabbar_sel"]
-        var buttons:[UIButton] = []
+        let button1 = TabBarButton(frame:CGRect.zero, title:"首頁", imageStr:"home_tabbar", selImageStr:"home_tabbar_sel")
+        pageViewContents.append((views[0],button1))
+        let button2 = TabBarButton(frame:CGRect.zero, title:"朋友", imageStr:"msg_tabbar", selImageStr:"msg_tabbar_sel")
+        pageViewContents.append((views[1],button2))
+        let button3 = TabBarButton(frame:CGRect.zero, title:"我的", imageStr:"friend_tabbar", selImageStr:"friend_tabbar_sel")
+        pageViewContents.append((views[2],button3))
+        let button4 = TabBarButton(frame:CGRect.zero, title:"消息", imageStr:"me_tabbar", selImageStr:"me_tabbar_sel")
+        pageViewContents.append((views[3],button4))
 
-        for i in 0..<titleArray.count {
-            buttons.append(TabBarButton(frame: CGRect.zero, title: titleArray[i], imageStr: imageArray[i], selImageStr: selImageArray[i]))
-        }
-
-        let scrollPage = TabBarPageView(frame:self.view.frame, subViews:views, buttons:buttons)
-        scrollPage.delegate = self
-        self.view = scrollPage
+        let pageView = TabBarPageView(frame:self.view.frame, contents:pageViewContents)
+        pageView.delegate = self
+        self.view = pageView
         // Do any additional setup after loading the view, typically from a nib.
     }
 
