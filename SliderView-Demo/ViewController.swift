@@ -14,16 +14,20 @@ class ViewController: UIViewController,TabBarPageViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         var views:[UIView] = []
-        for _ in 0...3 {
+        for _ in 0...4 {
             let view = UIView(frame: self.view.frame)
             view.backgroundColor = ColorRandom()
             views.append(view)
         }
 
-        let titleArray = ["首頁","朋友","我的","消息"]
-        let imageArray = ["home_tabbar","msg_tabbar","friend_tabbar","me_tabbar"]
-        let selImageArray = ["home_tabbar_sel","msg_tabbar_sel","friend_tabbar_sel","me_tabbar_sel"]
-        let buttons = TabBarButton.makeButtonArray(titles:titleArray, imageStrs:imageArray, selImageStrs:selImageArray)
+        let titleArray = ["首頁","朋友","我的","消息","消息"]
+        let imageArray = ["home_tabbar","msg_tabbar","friend_tabbar","me_tabbar","me_tabbar"]
+        let selImageArray = ["home_tabbar_sel","msg_tabbar_sel","friend_tabbar_sel","me_tabbar_sel","me_tabbar_sel"]
+        var buttons:[UIButton] = []
+
+        for i in 0..<titleArray.count {
+            buttons.append(TabBarButton(frame: CGRect.zero, title: titleArray[i], imageStr: imageArray[i], selImageStr: selImageArray[i]))
+        }
 
         let scrollPage = TabBarPageView(frame:self.view.frame, subViews:views, buttons:buttons)
         scrollPage.delegate = self

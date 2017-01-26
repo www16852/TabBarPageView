@@ -11,6 +11,8 @@ import UIKit
 public class TabBarButton:UIButton {
 
     private let scale:CGFloat = 0.55
+    private let ColorTitleSel = ColorRGB(41,g: 167,b: 245)
+    private let ColorTitle = UIColor.gray
 
     override public var isHighlighted:Bool {
         didSet{
@@ -18,7 +20,23 @@ public class TabBarButton:UIButton {
         }
     }
 
-    public init(){
+    public convenience init(frame:CGRect, title:String, imageStr:String, selImageStr:String, titleFontSize:CGFloat = 12.0){
+        let image:UIImage = UIImage.init(named: imageStr)!
+        let selImage:UIImage = UIImage.init(named: selImageStr)!
+        self.init(frame:frame, title:title, image:image, selImage:selImage, titleFontSize:titleFontSize)
+    }
+
+    public convenience init(frame:CGRect, title:String, image:UIImage, selImage:UIImage, titleFontSize:CGFloat = 12.0){
+        self.init(frame:frame)
+        self.setTitleColor(ColorTitle, for: UIControlState())
+        self.setTitleColor(ColorTitleSel, for: .selected)
+        self.titleLabel?.font = UIFont.systemFont(ofSize: titleFontSize)
+        self.setImage(image, for: .normal)
+        self.setImage(selImage, for: .selected)
+        self.setTitle(title, for: UIControlState())
+    }
+
+    public override init(frame:CGRect){
         super.init(frame:CGRect.zero)
         imageView?.contentMode = .scaleAspectFit
         titleLabel?.textAlignment = .center
@@ -43,42 +61,5 @@ public class TabBarButton:UIButton {
         let newHeight: CGFloat = contentRect.size.height-contentRect.size.height*scale
         return CGRect(x: newX, y: newY, width: newWidth, height: newHeight)
     }
-
-
-    public static func makeButtonArray(titles:[String], imageStrs:[String], selImageStrs:[String], titleFontSize:CGFloat = 12.0) -> [UIButton] {
-        var images:[UIImage] = []
-        var selImages:[UIImage] = []
-        for i in 0..<imageStrs.count {
-            images.append(UIImage.init(named: imageStrs[i])!)
-        }
-        for i in 0..<selImageStrs.count {
-            selImages.append(UIImage.init(named: selImageStrs[i])!)
-        }
-        return TabBarButton.makeButtonArray(titles:titles, images:images, selImages:selImages, titleFontSize:titleFontSize)
-    }
-
-    public static func makeButtonArray(titles:[String], images:[UIImage], selImages:[UIImage], titleFontSize:CGFloat = 12.0) -> [UIButton] {
-        if ContainsEqual(titles,images,selImages) == false {
-            print("[Warming] count of parameter_array are unequal")
-        }
-        var buttons:[UIButton] = []
-
-        let ColorTitleSel = ColorRGB(41,g: 167,b: 245)
-        let titleFontSize : CGFloat = 12.0
-        let ColorTitle = UIColor.gray
-
-        for i in 0..<titles.count {
-            let button = TabBarButton()
-            button.setTitleColor(ColorTitle, for: UIControlState())
-            button.setTitleColor(ColorTitleSel, for: .selected)
-            button.titleLabel?.font = UIFont.systemFont(ofSize: titleFontSize)
-            button.setImage(images[i], for: .normal)
-            button.setImage(selImages[i], for: .selected)
-            button.setTitle(titles[i], for: UIControlState())
-
-            buttons.append(button)
-        }
-        return buttons
-    }
-
+    
 }
